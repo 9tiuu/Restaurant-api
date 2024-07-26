@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { api } from "../services/api";
 import { useParams } from "react-router-dom";
 import { CommentForm } from "./CommentForm";
+import Estrella from '../img/strella.png';
+import Vacias from '../img/estrvacia.png'
 
 export const DetailRestaurant = () => {
     const { id } = useParams();
@@ -38,12 +40,21 @@ export const DetailRestaurant = () => {
         } catch (error) { console.log(error.message) };
     };
 
+    const imgen = <img src={Estrella} alt="" width={'2%'} />
+    const vacia = <img src={Vacias} alt="" width={'2%'} />
+
     return (
         <div className="container mt-4 border p-2">
             <h2>{restName}</h2>
             <p>{address}</p>
             <img src={image} alt="" width={'30%'} />
-            <h3 className="mt-4">{rating}</h3>
+            <h3 className="mt-4">{
+                
+                [...new Array(5)].map((start, index) => {
+                    return index < rating ? imgen : vacia
+                })
+
+            }</h3>
             <h3>Comments:</h3>
 
             <ul className="list-group">
